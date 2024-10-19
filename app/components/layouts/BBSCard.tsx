@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { BBSData } from "@/app/types/types";
 
 import {
   Card,
@@ -10,24 +11,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const BBSCard = () => {
+interface BBSDataProps {
+  bbsData: BBSData;
+}
+
+const BBSCard = ({ bbsData }: BBSDataProps) => {
+  const { id, username, title, content, createAt } = bbsData;
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Create Project</CardTitle>
-          <CardDescription>
-            Deploy your new project in one click.
-          </CardDescription>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{username}</CardDescription>
         </CardHeader>
-        <CardContent>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt odio
-          eaque, quos nobis veniam ut, eligendi ullam officia impedit totam
-          harum eum consequuntur iste nesciunt, assumenda soluta. Ad, sapiente
-          perferendis.
-        </CardContent>
+        <CardContent>{content}</CardContent>
         <CardFooter className="flex justify-between">
-          <Link href={"/bbs-posts/1"} className="text-blue-500">
+          <Link href={`/bbs-posts/${id}`} className="text-blue-500">
             Read More
           </Link>
         </CardFooter>
