@@ -19,8 +19,9 @@ import { Input } from "@/components/ui/input";
 import { title } from "process";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { postBBS } from "@/app/actions/postBBSAction";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
@@ -53,19 +54,22 @@ const createBBSpage = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { username, title, content } = values;
-    try {
-      await fetch("http://localhost:3000/api/post", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, title, content }),
-      });
-      router.push("/");
-      router.refresh();
-    } catch (err) {
-      console.log(err);
-    }
+    postBBS({ username, title, content });
+
+    // form function ver1
+    // try {
+    //   await fetch("http://localhost:3000/api/post", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ username, title, content }),
+    //   });
+    //   router.push("/");
+    //   router.refresh();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 
   return (
